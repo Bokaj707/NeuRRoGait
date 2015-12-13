@@ -1,0 +1,2 @@
+Hip Pitch	Hip Roll	Hip Yaw	Knee Pitch	Knee Roll	Knee Yaw	Ankle Pitch	Ankle Roll	Ankle Yaw	Time Stamp
+
