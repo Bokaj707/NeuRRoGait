@@ -1,3 +1,0 @@
-Hip Pitch	Hip Roll	Hip Yaw	Knee Pitch	Knee Roll	Knee Yaw	Ankle Pitch	Ankle Roll	Ankle Yaw	Time Stamp
-
-										36.0303	-3.857858	-16.30504	15.79913	-0.05901315	-5.437626	-6.065764	0.1330636	3.762892	20.10655	

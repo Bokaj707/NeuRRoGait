@@ -84,7 +84,7 @@ public class Puppet : MonoBehaviour {
         thighModel.transform.parent = null;
         thighHipJointCenter.transform.rotation = Quaternion.LookRotation(Vector3.Cross(thighHipJointCenter.transform.right, Vector3.Normalize(thighHipJointCenter.transform.position - kneeJointCenter.transform.position)), 
             Vector3.Normalize(thighHipJointCenter.transform.position - kneeJointCenter.transform.position));
-        thighModel.transform.transform.parent = thighHipJointCenter.transform;
+        thighModel.transform.parent = thighHipJointCenter.transform;
 
         shankKneeJointCenter.transform.parent = null;
         shankModel.transform.parent = null;
@@ -104,7 +104,7 @@ public class Puppet : MonoBehaviour {
 
         thighHipJointCenter.transform.position = joints[(int)Joints.jointEnum.hipJoint].transform.position;
         thighHipJointCenter.transform.rotation = joints[(int)Joints.jointEnum.kneeJoint].transform.rotation;
-        thighHipJointCenter.transform.parent = joints[(int)Joints.jointEnum.kneeJoint].transform;
+        thighHipJointCenter.transform.parent = joints[(int)Joints.jointEnum.hipJointPartner].transform;
 
         shankKneeJointCenter.transform.position = joints[(int)Joints.jointEnum.kneeJoint].transform.position;
         shankKneeJointCenter.transform.rotation = joints[(int)Joints.jointEnum.kneeJointPartner].transform.rotation;
@@ -114,13 +114,29 @@ public class Puppet : MonoBehaviour {
         footAnkleJointCenter.transform.rotation = joints[(int)Joints.jointEnum.ankleJointPartner].transform.rotation;
         footAnkleJointCenter.transform.parent = joints[(int)Joints.jointEnum.ankleJointPartner].transform;
 
-        float currentDistance = Vector3.Distance(hipJointCenter.transform.position, kneeJointCenter.transform.position);
-        float targetDistance = Vector3.Distance(hipJointCenter.transform.position, joints[(int)Joints.jointEnum.kneeJoint].transform.position);
-        //thighModel.transform.localScale = thighModel.transform.localScale * Vector3.Distance(hipJointCenter.transform.position, kneeJointCenter.transform.position) - Vector3.Distance(hipJointCenter.transform.position, kneeJointCenter.transform.position)
+        scale(thighModel, thighHipJointCenter, kneeJointCenter, joints[(int)Joints.jointEnum.hipJoint], joints[(int)Joints.jointEnum.kneeJoint]);
+        scale(shankModel, shankKneeJointCenter, ankleJointCenter, joints[(int)Joints.jointEnum.kneeJoint], joints[(int)Joints.jointEnum.ankleJoint]);
     }
-    private void updateJoints()
-    {
 
+    private void scale(GameObject model, GameObject modelUpperJointCenter, GameObject modelLowerJointCenter, GameObject upperJointCenter, GameObject lowerJointCenter)
+    {
+        Transform modelUpperJointParent = modelUpperJointCenter.transform.parent;
+        modelUpperJointCenter.transform.rotation = Quaternion.identity;
+
+        model.transform.parent = null;
+        modelUpperJointCenter.transform.parent = model.transform;
+
+        float scale = (Vector3.Distance(lowerJointCenter.transform.position, upperJointCenter.transform.position)
+                / Vector3.Distance(modelLowerJointCenter.transform.position, modelUpperJointCenter.transform.position));
+
+        model.transform.localScale = new Vector3((model.transform.localScale.x * scale), (model.transform.localScale.y * scale), (model.transform.localScale.z * scale));
+
+        modelUpperJointCenter.transform.parent = null;
+        model.transform.parent = modelUpperJointCenter.transform;
+
+        modelUpperJointCenter.transform.position = upperJointCenter.transform.position;
+        modelUpperJointCenter.transform.rotation = lowerJointCenter.transform.rotation;
+        modelUpperJointCenter.transform.parent = modelUpperJointParent.transform;
     }
 
     public void setSide(int side)

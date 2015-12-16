@@ -1,0 +1,20 @@
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Gait Tracking.CSharpTests.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Gait Tracking.CSharpTests.pdb
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Assembly-CSharp.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Mono.Cecil.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEditor.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEditor.iOS.Extensions.Xcode.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEngine.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEngine.Networking.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEngine.UI.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Assembly-CSharp.pdb
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\Mono.Cecil.xml
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEditor.xml
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEngine.xml
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEngine.Networking.xml
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\bin\Debug\UnityEngine.UI.xml
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\obj\Debug\Gait Tracking.CSharpTests.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\obj\Debug\Gait Tracking.CSharpTests.dll
+C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Gait Tracking.CSharpTests\obj\Debug\Gait Tracking.CSharpTests.pdb

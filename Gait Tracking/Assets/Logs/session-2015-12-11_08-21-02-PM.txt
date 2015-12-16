@@ -1,8 +1,0 @@
-Time Stamp	Hip Pitch	Hip Roll	Hip Yaw	Knee Pitch	Knee Roll	Knee Yaw	Ankle Pitch	Ankle Roll	Ankle Yaw	Hjoint X	Hjoint Y	Hjoint Z	Kjoint X	Kjoint Y	Kjoint Z	Ajoint X	Ajoint Y	Ajoint Z	Ankle Path	Hip OffPitch	Hip OffRoll	Hip OffYaw	Knee OffPitch	Knee OffRoll	Knee OffYaw	Ankle OffPitch	Ankle OffRoll	Ankle OffYaw	
-20.8662																				19.13	9.71	-4.24	8.82	6.50	6.33	10.30	-11.54	-10.30	
-31.4238																				-92.62	150.45	21.20	-30.30	2.63	-3.50	156.60	24.67	-2.76	
-34.777																				-11.99	-2.40	0.83	-13.32	-6.12	-4.76	-156.02	-24.49	2.19	
-37.3168																				-0.45	-0.84	0.89	0.31	0.28	1.27	1.42	-1.09	-1.42	
-42.6288																				104.92	-146.82	-22.45	42.33	-10.24	7.49	-1.46	23.28	1.49	
-43.6663																				-73.27	-171.94	21.86	1.61	0.15	-0.05	0.25	-22.13	-0.22	
-46.4136																				73.30	172.00	-22.16	-0.84	-0.10	0.14	-1.04	21.37	1.02	

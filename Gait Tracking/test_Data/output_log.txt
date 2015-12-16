@@ -1,0 +1,68 @@
+Mono path[0] = 'C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/test_Data/Managed'
+Mono path[1] = 'C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/test_Data/Mono'
+Mono config path = 'C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/test_Data/Mono/etc'
+PlayerConnection initialized from C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/test_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55463
+Multi-casting "[IP] 10.51.11.22 [Port] 55463 [Flags] 2 [Guid] 1711394337 [EditorId] 312592212 [Version] 1048832 [Id] WindowsPlayer(SIMULATOR-1) [Debug] 0" to [225.0.0.222:54997]...
+PlayerConnection already initialized - listening to [10.51.11.22:55463]
+Initialize engine version: 5.2.3f1 (f3d16a1fa2dd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 970 (ID=0x13c2)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.040 seconds
+desktop: 1920x1080 60Hz; virtual: 7680x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\System.dll (this message is harmless)
+DirectoryNotFoundException: Could not find a part of the path "C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Logs\session-2015-12-16_12-07-55-PM.txt".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001be] in /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System.IO/FileStream.cs:292 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.FileStream:.ctor (string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)
+  at System.IO.StreamWriter..ctor (System.String path, Boolean append, System.Text.Encoding encoding, Int32 bufferSize) [0x00039] in /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System.IO/StreamWriter.cs:124 
+  at System.IO.StreamWriter..ctor (System.String path) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.IO.StreamWriter:.ctor (string)
+  at Logger.construct (Int32 columns, System.String filepath, System.String filename, Int32 linesPerCommit, LoggingButtonHandler handler) [0x0002f] in C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Assets\Scripts\Logger.cs:43 
+  at Logger..ctor (Int32 columns, System.String filepath, System.String filename, Int32 linesPerCommit, System.String[] headers, LoggingButtonHandler handler) [0x00006] in C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Assets\Scripts\Logger.cs:25 
+  at Joints.Start () [0x00287] in C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Assets\Scripts\Joints.cs:134 
+ 
+(Filename: /Users/builduser/buildslave/mono-runtime-and-classlibs/build/mcs/class/corlib/System.IO/FileStream.cs Line: 292)
+
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\System.Configuration.dll (this message is harmless)
+Platform assembly: C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\test_Data\Managed\System.Xml.dll (this message is harmless)
+Win32Exception: The system cannot find the file specified.
+
+  at System.Diagnostics.Process.Start_shell (System.Diagnostics.ProcessStartInfo startInfo, System.Diagnostics.Process process) [0x00000] in <filename unknown>:0 
+  at System.Diagnostics.Process.Start_common (System.Diagnostics.ProcessStartInfo startInfo, System.Diagnostics.Process process) [0x00000] in <filename unknown>:0 
+  at System.Diagnostics.Process.Start (System.Diagnostics.ProcessStartInfo startInfo) [0x00000] in <filename unknown>:0 
+  at System.Diagnostics.Process.Start (System.String fileName) [0x00000] in <filename unknown>:0 
+  at SlipStream.Start () [0x00077] in C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Assets\Scripts\SlipStream.cs:64 
+ 
+(Filename: C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/Assets/Scripts/SlipStream.cs Line: 64)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 23c4 -> priority: 1 
+  Thread -> id: 2104 -> priority: 1 
+NullReferenceException: Object reference not set to an instance of an object
+  at SlipStream.OnApplicationQuit () [0x00000] in C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Assets\Scripts\SlipStream.cs:125 
+ 
+(Filename: C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/Assets/Scripts/SlipStream.cs Line: 125)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Joints.OnApplicationQuit () [0x00000] in C:\Users\User\Documents\Rodseth\GIT\NeuRRo\NeuRRoGait\Gait Tracking\Assets\Scripts\Joints.cs:704 
+ 
+(Filename: C:/Users/User/Documents/Rodseth/GIT/NeuRRo/NeuRRoGait/Gait Tracking/Assets/Scripts/Joints.cs Line: 704)
+
