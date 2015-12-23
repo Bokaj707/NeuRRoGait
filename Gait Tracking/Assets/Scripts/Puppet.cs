@@ -19,6 +19,8 @@ public class Puppet : MonoBehaviour {
 
     Joints jointController;
 
+    int modelVisibility;
+
     public enum side : int {Right = 1, None=0, Left = -1};
     private int sideIs;
     bool tPosed;
@@ -30,6 +32,8 @@ public class Puppet : MonoBehaviour {
         tPosed = false;
         pelvisModel = GameObject.Find("hip");
         jointController = GameObject.Find("RigidBodyStruct").GetComponent<Joints>();
+
+        modelVisibility = 0;
     }
 	
 	// Update is called once per frame
@@ -137,6 +141,57 @@ public class Puppet : MonoBehaviour {
         modelUpperJointCenter.transform.position = upperJointCenter.transform.position;
         modelUpperJointCenter.transform.rotation = lowerJointCenter.transform.rotation;
         modelUpperJointCenter.transform.parent = modelUpperJointParent.transform;
+    }
+
+    public void ToggleModelButtonPress()
+    {
+        switch(modelVisibility)
+        {
+            case 0:
+                {
+
+                    foreach (GameObject model in GameObject.FindGameObjectsWithTag("SkeletonModel"))
+                    {
+                        model.GetComponent<MeshRenderer>().enabled = !model.GetComponent<MeshRenderer>().enabled;
+                    }
+                    modelVisibility++;
+                    break;
+                }
+            case 1:
+                {
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("BoneRenderer"))
+                    {
+                        obj.GetComponent<LineRenderer>().enabled = !obj.GetComponent<LineRenderer>().enabled;
+                    }
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("RigidBodyRenderer"))
+                    { 
+                        obj.GetComponent<MeshRenderer>().enabled = !obj.GetComponent<MeshRenderer>().enabled;
+                    }
+                    jointController.VMShowButtonPress();
+                    modelVisibility++;
+                    break;
+                }
+            case 2:
+                {
+                    foreach (GameObject model in GameObject.FindGameObjectsWithTag("SkeletonModel"))
+                    {
+                        model.GetComponent<MeshRenderer>().enabled = !model.GetComponent<MeshRenderer>().enabled;
+                    }
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("BoneRenderer"))
+                    {
+                        obj.GetComponent<LineRenderer>().enabled = !obj.GetComponent<LineRenderer>().enabled;
+                    }
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("RigidBodyRenderer"))
+                    {
+                        obj.GetComponent<MeshRenderer>().enabled = !obj.GetComponent<MeshRenderer>().enabled;
+                    }
+                    jointController.VMShowButtonPress();
+                    modelVisibility = 0;
+                    break;
+                }
+        }
+
+        
     }
 
     public void setSide(int side)

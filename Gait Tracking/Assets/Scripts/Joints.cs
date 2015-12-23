@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
-public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
+public class Joints : MonoBehaviour, FileIO.LoggingButtonHandler  {
 
     GameObject stylus;
     GameObject stylusPoint;
@@ -32,6 +32,7 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
     GameObject virtualParent;
 
     GameObject averageCam;
+    CameraController camController;
 
     float lastTime;
     float currentTime;
@@ -46,7 +47,7 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
 
     static readonly string loggingPrecision = "0.000";
 
-    Logger logger;
+    FileIO logger;
 
     Puppet skeleton;
 
@@ -61,6 +62,8 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
     public enum virtualMarkersEnum : int {ASIS1, ASIS2, PSIS1, PSIS2, FE1, FE2, LM, MM};
     public GameObject[] virtualMarkers;
     public GameObject[] joints;
+
+    Queue<float[]>[] lostPoints;
 
     private enum headers
     {
@@ -89,6 +92,8 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
     // Use this for initialization
     void Start ()
     {
+        camController = GameObject.Find("CameraController").GetComponent<CameraController>();
+
         inverter = 0;
         virtualMarkers = new GameObject[8];
         joints = new GameObject[6];
@@ -122,13 +127,17 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
         angles = new float[9];
         offsets = new float[9];
 
-        for(int i = 0; i < 9; i++)
+        lostPoints = new Queue<float[]>[4];
+
+        for (int i = 0; i < 9; i++)
         {
             angles[i] = offsets[i] = 0f;
         }
 
         skeleton = GameObject.Find("LegContainer").GetComponent<Puppet>();
         averageCam = new GameObject("CameraFocus");
+
+        GUISafety();
 
         string[] headers = {"Time Stamp",
             "Hip Pitch", "Hip Roll", "Hip Yaw",
@@ -137,12 +146,12 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
             "Hjoint X","Hjoint Y","Hjoint Z",
             "Kjoint X","Kjoint Y","Kjoint Z",
             "Ajoint X","Ajoint Y","Ajoint Z",
-            "Ankle Path x", "Ankle Path y", "Ankle Path y",
+            "Ankle Path x", "Ankle Path y", "Ankle Path z",
             "Hip OffPitch", "Hip OffRoll", "Hip OffYaw",
             "Knee OffPitch", "Knee OffRoll", "Knee OffYaw",
             "Ankle OffPitch","Ankle OffRoll","Ankle OffYaw"};
         
-        logger = new Logger(headers.Length, Application.dataPath + @"\Logs\", string.Format("session-{0:yyyy-MM-dd_hh-mm-ss-tt}.txt", DateTime.Now), 600, headers, this);
+        logger = new FileIO(headers.Length, Application.dataPath + @"\Logs\", string.Format("session-{0:yyyy-MM-dd_hh-mm-ss-tt}.txt", DateTime.Now), 600, headers, this);
 
         anklePoints = new Queue<Vector3>();
         currentPoint = 0;
@@ -288,6 +297,44 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
         }
     }
 
+    private void bodyLost(int body, Queue<int> columns)
+    {
+        int currentLine = logger.getLine();
+        while(columns.Count>0)
+        {
+            int c = columns.Dequeue();
+            float[] f = new float[3];//(line, column, data)
+            f[0] = currentLine;
+            f[1] = c;
+            f[2] = float.Parse(logger.getData(c));
+            lostPoints[body].Enqueue(f);
+        }
+    }
+
+    private void bodyFound(int body)
+    {
+        while(lostPoints[body].Count>0)
+        {
+            float[] f = lostPoints[body].Dequeue();
+            int firstLine = (int)f[0];
+            int column = (int)f[1];
+            float data = f[3];
+
+            int currentLine = logger.getLine();
+            int missingPoints = currentLine - firstLine - 1;
+
+            for (int i = 0; i < missingPoints; i++)
+            {
+                logger.pushCorrections(new FileIO.dataCorrection(currentLine + i, column, interpolateData(data, float.Parse(logger.getData(column)), missingPoints, i+1).ToString(loggingPrecision)));
+            }
+        }
+    }
+
+    private float interpolateData(float lastKnownValue, float currentValue, int numberOfLerps, int currentLerp)
+    {
+        return Mathf.Lerp(lastKnownValue, currentValue, (float)currentLerp / (float)numberOfLerps);
+    }
+
     private void Snapshot()
     {
         logger.setColumn((int)headers.HjointX, joints[(int)jointEnum.hipJoint].transform.position.x.ToString(loggingPrecision));
@@ -332,6 +379,7 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
             averageCam.transform.parent = pelvis.transform;
 
             skeleton.setSide(inverter);
+            GameObject.Find("CameraController").GetComponent<CameraController>().setSide(inverter);
         }
 
         joints[(int)jointEnum.hipJointPartner].transform.position = joints[(int)jointEnum.hipJoint].transform.position;
@@ -343,16 +391,16 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
         Vector3 floatingAnkle = Vector3.Normalize(Vector3.Cross(joints[(int)jointEnum.ankleJoint].transform.right, joints[(int)jointEnum.ankleJointPartner].transform.up));
 
         angles[0] = FlexionExtension(joints[(int)jointEnum.hipJoint], floatingHip);
-        angles[1] = InternalExternatlRotation(joints[(int)jointEnum.hipJointPartner], floatingHip);
-        angles[2] = AductionAbduction(joints[(int)jointEnum.hipJoint], joints[(int)jointEnum.hipJointPartner]);
+        angles[1] = -inverter * InternalExternatlRotation(joints[(int)jointEnum.hipJointPartner], floatingHip);
+        angles[2] = -inverter * AductionAbduction(joints[(int)jointEnum.hipJoint], joints[(int)jointEnum.hipJointPartner]);
 
-        angles[3] = FlexionExtension(joints[(int)jointEnum.kneeJoint], floatingKnee);
-        angles[4] = InternalExternatlRotation(joints[(int)jointEnum.kneeJointPartner], floatingKnee);
-        angles[5] = AductionAbduction(joints[(int)jointEnum.kneeJoint], joints[(int)jointEnum.kneeJointPartner]);
+        angles[3] = -FlexionExtension(joints[(int)jointEnum.kneeJoint], floatingKnee);
+        angles[4] = -InternalExternatlRotation(joints[(int)jointEnum.kneeJointPartner], floatingKnee);
+        angles[5] = -inverter * AductionAbduction(joints[(int)jointEnum.kneeJoint], joints[(int)jointEnum.kneeJointPartner]);
 
-        angles[6] = FlexionExtension(joints[(int)jointEnum.ankleJoint], floatingAnkle);
-        angles[7] = InternalExternatlRotation(joints[(int)jointEnum.ankleJointPartner], floatingAnkle);
-        angles[8] = AductionAbduction(joints[(int)jointEnum.ankleJoint], joints[(int)jointEnum.ankleJointPartner]);
+        angles[6] = -FlexionExtension(joints[(int)jointEnum.ankleJoint], floatingAnkle);
+        angles[7] = -InternalExternatlRotation(joints[(int)jointEnum.ankleJointPartner], floatingAnkle);
+        angles[8] =  -inverter * AductionAbduction(joints[(int)jointEnum.ankleJoint], joints[(int)jointEnum.ankleJointPartner]);
 
         if (tPosed)
         {
@@ -385,6 +433,8 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
         {
                 ZeroAngles();
                 tPosed = true;
+                camController.StartController(joints[(int)jointEnum.hipJoint], joints[(int)jointEnum.ankleJoint]);
+                GUISafety();
         }
 
         //Debug.Log(Vector3.Distance(joints[(int)jointEnum.hipJoint].transform.position, joints[(int)jointEnum.kneeJoint].transform.position).ToString());
@@ -592,9 +642,6 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
             interpolationPoints[i] = null;
             i++;
         }
-
-        anklePathRendererObject.transform.position = this.joints[(int)jointEnum.ankleJoint].transform.position;
-        anklePathRendererObject.transform.parent = pelvis.transform;
     }
     private GameObject SetPoint(GameObject parent, GameObject point)
     {
@@ -690,6 +737,7 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
             currentPoint++;
         }
 
+        anklePathRendererObject.transform.position = joints[(int)jointEnum.hipJoint].transform.position;
         anklePathRendererObject.transform.rotation = Quaternion.identity;
         Vector3 jointLoc = joints[(int)jointEnum.ankleJoint].transform.position;
         Vector3 framedJointLoc = anklePathRendererObject.transform.InverseTransformPoint(jointLoc);
@@ -724,6 +772,10 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
             GameObject.Find("TogglePathParentButton").transform.FindChild("Text").GetComponent<Text>().text = "Global Path";
             anklePathRendererObject.GetComponent<LineRenderer>().useWorldSpace = true;
         }
+    }
+    public void toggleAnklePathButton()
+    {
+        anklePathRendererObject.GetComponent<LineRenderer>().enabled = !anklePathRendererObject.GetComponent<LineRenderer>().enabled;
     }
     public void ChangeTrailLength()
     {
@@ -766,20 +818,17 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
         {
             foreach(GameObject vm in virtualMarkers)
             {
-                vm.GetComponent<MeshRenderer>().enabled = !vm.GetComponent<MeshRenderer>().enabled;
+                vm.GetComponentInChildren<MeshRenderer>().enabled = !vm.GetComponentInChildren<MeshRenderer>().enabled;
+            }
+            foreach (GameObject vm in joints)
+            {
+                vm.GetComponentInChildren<MeshRenderer>().enabled = !vm.GetComponentInChildren<MeshRenderer>().enabled;
             }
         }
     }
     public GameObject[] getJoints()
     {
         return joints;
-    }
-    public void ToggleModelButtonPress()
-    {
-            foreach(GameObject model in GameObject.FindGameObjectsWithTag("SkeletonModel"))
-            {
-                model.GetComponent<MeshRenderer>().enabled = !model.GetComponent<MeshRenderer>().enabled;
-            }
     }
     private void SetSide()
     {
@@ -825,4 +874,20 @@ public class Joints : MonoBehaviour, Logger.LoggingButtonHandler  {
     {
         GameObject.Find("LogInput").GetComponent<InputField>().text = newTime;
     }
+    private void GUISafety()
+    {
+        foreach(GameObject button in GameObject.FindGameObjectsWithTag("PosedDependant"))
+        {
+            button.GetComponent<Button>().interactable = !button.GetComponent<Button>().interactable;
+        }
+    }
+    internal FileIO getFileIO()
+    {
+        return logger;
+    }
+    public void showAnklePathButton()
+    {
+        anklePathRendererObject.GetComponent<LineRenderer>().enabled = !anklePathRendererObject.GetComponent<LineRenderer>().enabled;
+    }
+    
 }

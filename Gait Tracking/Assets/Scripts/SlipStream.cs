@@ -65,7 +65,7 @@ public class SlipStream : MonoBehaviour
         }
         else
         {
-            plugin = System.Diagnostics.Process.Start(Application.dataPath + @"Assets\OptitrackUnityPlugin\Source\Unity3D\bin\UnityPlugin.exe"); //Start Optitrack Unity Interface
+            plugin = System.Diagnostics.Process.Start(Application.dataPath + @"\UnityPlugin.exe"); //Start Optitrack Unity Interface
         }
 
         UDPRead();
